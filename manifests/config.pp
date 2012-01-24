@@ -51,6 +51,11 @@ class nginx::config inherits nginx::params {
     content => template('nginx/conf.d/nginx.conf.erb'),
   }
 
+  file { "${nginx::params::nx_conf_dir}/mime.types":
+    ensure  => file,
+    source  => 'puppet:///modules/nginx/mime.types',
+  }
+
   file { "${nginx::params::nx_conf_dir}/conf.d/proxy.conf":
     ensure  => file,
     content => template('nginx/conf.d/proxy.conf.erb'),
