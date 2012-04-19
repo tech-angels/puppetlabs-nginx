@@ -19,7 +19,7 @@ class nginx::service {
     refreshonly => true,
     subscribe   => File["${nginx::params::nx_temp_dir}/nginx.d"],
   }
-  service { "nginx":
+  service { 'nginx':
     ensure     => running,
     enable     => true,
     hasstatus  => true,

@@ -27,7 +27,7 @@
 #  nginx::resource::vhost { 'test2.local':
 #    ensure   => present,
 #    www_root => '/var/www/nginx-default',
-#    ssl      => 'true',
+#    ssl      => true,
 #    ssl_cert => '/tmp/server.crt',
 #    ssl_key  => '/tmp/server.pem',
 #  }
@@ -55,12 +55,12 @@ define nginx::resource::vhost(
 
   # Add IPv6 Logic Check - Nginx service will not start if ipv6 is enabled
   # and support does not exist for it in the kernel.
-  if ($ipv6_enable == 'true') and ($ipaddress6)  {
+  if ($ipv6_enable == true) and ($ipaddress6)  {
     warning('nginx: IPv6 support is not enabled or configured properly')
   }
 
   # Check to see if SSL Certificates are properly defined.
-  if ($ssl == 'true') {
+  if ($ssl == true) {
     if ($ssl_cert == undef) or ($ssl_key == undef) {
       fail('nginx: SSL certificate/key (ssl_cert/ssl_cert) and/or SSL Private must be defined and exist on the target system(s)')
     }
@@ -74,7 +74,7 @@ define nginx::resource::vhost(
       default  => 'file',
     },
     content => template('nginx/vhost/vhost_header.erb'),
-    notify => Class['nginx::service'],
+    notify  => Class['nginx::service'],
   }
 
   # Create the default location reference for the vHost
@@ -100,22 +100,22 @@ define nginx::resource::vhost(
   }
 
   # Create SSL File Stubs if SSL is enabled
-  if ($ssl == 'true') {
+  if ($ssl == true) {
     file { "${nginx::config::nx_temp_dir}/nginx.d/${name}-700-ssl":
-      ensure => $ensure ? {
+      ensure  => $ensure ? {
         'absent' => absent,
         default  => 'file',
       },
       content => template('nginx/vhost/vhost_ssl_header.erb'),
-      notify => Class['nginx::service'],
+      notify  => Class['nginx::service'],
     }
     file { "${nginx::config::nx_temp_dir}/nginx.d/${name}-999-ssl":
-      ensure => $ensure ? {
+      ensure  => $ensure ? {
         'absent' => absent,
         default  => 'file',
       },
       content => template('nginx/vhost/vhost_footer.erb'),
-      notify => Class['nginx::service'],
+      notify  => Class['nginx::service'],
     }
   }
 }

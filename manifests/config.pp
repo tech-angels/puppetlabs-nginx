@@ -20,7 +20,7 @@ class nginx::config inherits nginx::params {
     mode  => '0644',
   }
 
-  file { "${nginx::params::nx_conf_dir}":
+  file { $nginx::params::nx_conf_dir:
     ensure => directory,
   }
 
@@ -28,16 +28,16 @@ class nginx::config inherits nginx::params {
     ensure => directory,
   }
 
-  file { "${nginx::config::nx_run_dir}":
+  file { $nginx::config::nx_run_dir:
     ensure => directory,
   }
 
-  file { "${nginx::config::nx_client_body_temp_path}":
+  file { $nginx::config::nx_client_body_temp_path:
     ensure => directory,
     owner  => $nginx::params::nx_daemon_user,
   }
 
-  file {"${nginx::config::nx_proxy_temp_path}":
+  file { $nginx::config::nx_proxy_temp_path:
     ensure => directory,
     owner  => $nginx::params::nx_daemon_user,
   }

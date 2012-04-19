@@ -26,6 +26,7 @@
 #    vhost    => 'test2.local',
 #  }
 define nginx::resource::location(
+  $location,
   $ensure             = present,
   $vhost              = undef,
   $www_root           = undef,
@@ -33,8 +34,7 @@ define nginx::resource::location(
   $proxy              = undef,
   $proxy_read_timeout = $nginx::params::nx_proxy_read_timeout,
   $ssl                = false,
-  $option             = undef,
-  $location
+  $option             = undef
 ) {
   File {
     owner  => 'root',
@@ -74,7 +74,7 @@ define nginx::resource::location(
   }
 
   ## Only create SSL Specific locations if $ssl is true.
-  if ($ssl == 'true') {
+  if ($ssl == true) {
     file {"${nginx::config::nx_temp_dir}/nginx.d/${vhost}-800-${name}-ssl":
       ensure  => $ensure_real,
       content => $content_real,
