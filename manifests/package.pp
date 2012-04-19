@@ -36,5 +36,6 @@ class nginx::package {
         before  => Anchor['nginx::package::end'],
       }
     }
+    default: {}
   }
 }
