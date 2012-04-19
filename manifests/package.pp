@@ -36,6 +36,8 @@ class nginx::package {
         before  => Anchor['nginx::package::end'],
       }
     }
-    default: {}
+    default: {
+      fail("${::operatingsystem} is not supported.")
+    }
   }
 }
