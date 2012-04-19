@@ -11,6 +11,7 @@
 #   [*ipv6_listen_ip*]   - Default IPv6 Address for NGINX to listen with this vHost on. Defaults to all interfaces (::)
 #   [*ipv6_listen_port*] - Default IPv6 Port for NGINX to listen with this vHost on. Defaults to TCP 80
 #   [*index_files*]      - Default index files for NGINX to read when traversing a directory
+#   [*access_log_name*]  - File name (without path) to the access log file. Default to server name
 #   [*proxy*]            - Proxy server(s) for the root location to connect to.  Accepts a single value, can be used in
 #                          conjunction with nginx::resource::upstream
 #   [*proxy_read_timeout*] - Override the default the proxy read timeout value of 90 seconds
@@ -41,6 +42,7 @@ define nginx::resource::vhost(
   $ssl                = false,
   $ssl_cert           = undef,
   $ssl_key            = undef,
+  $access_log_name    = $name,
   $proxy              = undef,
   $proxy_read_timeout = $nginx::params::nx_proxy_read_timeout,
   $index_files        = ['index.html', 'index.htm', 'index.php'],
