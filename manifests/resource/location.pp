@@ -12,7 +12,7 @@
 #                            with nginx::resource::upstream
 #   [*proxy_read_timeout*] - Override the default the proxy read timeout value of 90 seconds
 #   [*ssl*]                - Indicates whether to setup SSL bindings for this location.
-#   [*option*]             - Reserved for future use
+#   [*option*]             - List of option rules.
 #
 # Actions:
 #
@@ -34,7 +34,7 @@ define nginx::resource::location(
   $proxy              = undef,
   $proxy_read_timeout = $nginx::params::nx_proxy_read_timeout,
   $ssl                = false,
-  $option             = undef
+  $options            = []
 ) {
   File {
     owner  => 'root',
