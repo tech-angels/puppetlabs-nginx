@@ -36,6 +36,9 @@ define nginx::resource::location(
   $ssl                = false,
   $options            = []
 ) {
+
+  validate_array($options)
+
   File {
     owner  => 'root',
     group  => 'root',
