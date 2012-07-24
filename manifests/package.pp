@@ -17,7 +17,7 @@ class nginx::package {
   anchor { 'nginx::package::begin': }
   anchor { 'nginx::package::end': }
 
-  case $operatingsystem {
+  case $::operatingsystem {
     centos,fedora,rhel: {
       class { 'nginx::package::redhat':
         require => Anchor['nginx::package::begin'],
@@ -25,7 +25,7 @@ class nginx::package {
       }
     }
     debian,ubuntu: {
-      class { 'nginx::package::debian': 
+      class { 'nginx::package::debian':
         require => Anchor['nginx::package::begin'],
         before  => Anchor['nginx::package::end'],
       }
@@ -35,6 +35,9 @@ class nginx::package {
         require => Anchor['nginx::package::begin'],
         before  => Anchor['nginx::package::end'],
       }
+    }
+    default: {
+      fail("${::operatingsystem} is not supported.")
     }
   }
 }

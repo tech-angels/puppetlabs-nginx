@@ -20,8 +20,8 @@
 #    ],
 #  }
 define nginx::resource::upstream (
-  $ensure = 'present',
-  $members
+  $members,
+  $ensure = 'present'
 ) {
   File {
     owner => 'root',
