@@ -45,6 +45,7 @@ define nginx::resource::vhost(
   $ssl_key            = undef,
   $access_log_name    = $name,
   $options            = [],
+  $location_options   = [],
   $proxy              = undef,
   $proxy_read_timeout = $nginx::params::nx_proxy_read_timeout,
   $index_files        = ['index.html', 'index.htm', 'index.php'],
@@ -93,6 +94,7 @@ define nginx::resource::vhost(
     proxy_read_timeout => $proxy_read_timeout,
     www_root           => $www_root,
     notify             => Class['nginx::service'],
+    options            => $location_options,
   }
 
   # Create a proper file close stub.
