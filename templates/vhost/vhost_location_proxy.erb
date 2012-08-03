@@ -1,5 +1,5 @@
   location <%= location %> {
-    <% options.each do |rule| %><%= rule %>;
+    <% options.flatten.ach do |rule| %><%= rule %>;
     <% end %>
     proxy_pass <%= proxy %>;
     proxy_read_timeout <%= proxy_read_timeout %>;

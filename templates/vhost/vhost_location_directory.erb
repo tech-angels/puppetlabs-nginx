@@ -1,5 +1,5 @@
   location <%= location %> {
-    <% options.each do |option| %><%= option %>;
+    <% options.flatten.each do |option| %><%= option %>;
     <% end %>
     root  <%= www_root %>;
     index <% index_files.each do |i| %> <%= i %> <% end %>; 
