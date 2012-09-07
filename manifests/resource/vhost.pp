@@ -35,6 +35,7 @@
 #  }
 define nginx::resource::vhost(
   $ensure             = 'enable',
+  $server_name        = $name,
   $listen_ip          = '*',
   $listen_port        = '80',
   $ipv6_enable        = false,
