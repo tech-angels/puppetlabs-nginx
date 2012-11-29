@@ -6,11 +6,12 @@
 #   [*ensure*]             - Enables or disables the specified location (present|absent)
 #   [*vhost*]              - Defines the default vHost for this location entry to include with
 #   [*location*]           - Specifies the URI associated with this location entry
-#   [*www_root*]           - Specifies the location on disk for files to be read from. Cannot be set in conjunction with $proxy
+#   [*www_root*]           - Specifies the location on disk for files to be read from. Cannot be set in conjunction with $proxy or $nginx_alias
 #   [*index_files*]        - Default index files for NGINX to read when traversing a directory
 #   [*proxy*]              - Proxy server(s) for a location to connect to. Accepts a single value, can be used in conjunction
-#                            with nginx::resource::upstream
+#                            with nginx::resource::upstream . Cannot be set in conjunction with $www_root or $nginx_alias
 #   [*proxy_read_timeout*] - Override the default the proxy read timeout value of 90 seconds
+#   [*nginx_alias*]        - Sets up an alias for the location.
 #   [*ssl*]                - Indicates whether to setup SSL bindings for this location.
 #   [*option*]             - List of option rules.
 #
@@ -33,6 +34,7 @@ define nginx::resource::location(
   $index_files        = ['index.html', 'index.htm', 'index.php'],
   $proxy              = undef,
   $proxy_read_timeout = $nginx::params::nx_proxy_read_timeout,
+  $nginx_alias        = undef,
   $ssl                = false,
   $options            = []
 ) {
@@ -55,6 +57,8 @@ define nginx::resource::location(
   # Use proxy template if $proxy is defined, otherwise use directory template.
   if ($proxy != undef) {
     $content_real = template('nginx/vhost/vhost_location_proxy.erb')
+  } elsif ($nginx_alias != undef) {
+    $content_real = template('nginx/vhost/vhost_location_alias.erb')
   } else {
     $content_real = template('nginx/vhost/vhost_location_directory.erb')
   }
@@ -63,11 +67,14 @@ define nginx::resource::location(
   if ($vhost == undef) {
     fail('Cannot create a location reference without attaching to a virtual host')
   }
-  if (($www_root == undef) and ($proxy == undef)) {
-    fail('Cannot create a location reference without a www_root or proxy defined')
+  if (($www_root == undef) and ($proxy == undef) and ($nginx_alias == undef)) {
+    fail('Cannot create a location reference without a www_root, nginx_alias or proxy defined')
   }
-  if (($www_root != undef) and ($proxy != undef)) {
-    fail('Cannot define both directory and proxy in a virtual host')
+  if (($www_root != undef) and ($nginx_alias != undef or $proxy != undef)) {
+    fail('Can only define one of www_root, nginx_alias or proxy')
+  }
+  if ($nginx_alias != undef and $proxy != undef) {
+    fail('Can only define one of www_root, nginx_alias or proxy')
   }
 
   ## Create stubs for vHost File Fragment Pattern
