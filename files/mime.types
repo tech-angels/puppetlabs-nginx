@@ -23,6 +23,7 @@ types {
     image/svg+xml                         svg svgz;
 
     application/java-archive              jar war ear;
+    application/json                      json;
     application/mac-binhex40              hqx;
     application/msword                    doc;
     application/pdf                       pdf;
@@ -31,7 +32,8 @@ types {
     application/vnd.ms-excel              xls;
     application/vnd.ms-powerpoint         ppt;
     application/vnd.wap.wmlc              wmlc;
-    application/vnd.wap.xhtml+xml         xhtml;
+    application/vnd.google-earth.kml+xml    kml;
+    application/vnd.google-earth.kmz        kmz;
     application/x-7z-compressed           7z;
     application/x-cocoa                   cco;
     application/x-java-archive-diff       jardiff;
@@ -47,6 +49,7 @@ types {
     application/x-tcl                     tcl tk;
     application/x-x509-ca-cert            der pem crt;
     application/x-xpinstall               xpi;
+    application/xhtml+xml                   xhtml;
     application/zip                       zip;
 
     application/octet-stream              bin exe dll;
@@ -55,24 +58,26 @@ types {
     application/octet-stream              eot;
     application/octet-stream              iso img;
     application/octet-stream              msi msp msm;
+    application/ogg                         ogx;
 
     audio/midi                            mid midi kar;
     audio/mpeg                            mp3;
+    audio/ogg                               oga ogg spx;
     audio/x-realaudio                     ra;
+    audio/webm                              weba;
 
     video/3gpp                            3gpp 3gp;
+    video/mp4                               mp4;
     video/mpeg                            mpeg mpg;
+    video/ogg                               ogv;
     video/quicktime                       mov;
+    video/webm                              webm;
     video/x-flv                           flv;
     video/x-mng                           mng;
     video/x-ms-asf                        asx asf;
     video/x-ms-wmv                        wmv;
     video/x-msvideo                       avi;
 
-    video/mp4                             mp4;
     video/mp4                             m4v;
-    video/webm                            webm;
-    audio/ogg                             oga;
-    video/ogg                             ogv;
     application/ogg                       ogg;
 }
