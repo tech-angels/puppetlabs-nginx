@@ -79,5 +79,4 @@ types {
     video/x-msvideo                       avi;
 
     video/mp4                             m4v;
-    application/ogg                       ogg;
 }
