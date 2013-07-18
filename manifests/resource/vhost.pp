@@ -35,7 +35,7 @@
 #  }
 define nginx::resource::vhost(
   $ensure             = 'enable',
-  $server_name        = $name,
+  $server_name        = [$name],
   $listen_ip          = '*',
   $listen_port        = '80',
   $ipv6_enable        = false,
@@ -54,6 +54,8 @@ define nginx::resource::vhost(
 ) {
 
   validate_array($options)
+  validate_array($location_options)
+  validate_array($server_name)
 
   File {
     owner => 'root',
