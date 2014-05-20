@@ -39,6 +39,7 @@ define nginx::resource::location(
   $options            = []
 ) {
 
+  validate_bool($ssl)
   validate_array($options)
 
   File {
